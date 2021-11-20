@@ -1,10 +1,5 @@
 #UC3
 
-mysql> INSERT INTO employee_payroll (name, salary, start) VALUES
-    ->          ( 'Bill', 1000000.00, '2018-01-03' ),
-    ->          ( 'Terisa', 2000000.00, '2019-11-13' ),
-    ->          ( 'Charlic', 3000000.00, '2020-05-21' );
-ERROR 1046 (3D000): No database selected
 mysql> show databases;
 +--------------------+
 | Database           |
