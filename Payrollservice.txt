@@ -1,29 +1,23 @@
-#UC8
+#UC9
 
-mysql> SELECT * FROM employee_payroll;
-+----+---------+--------+---------+------------+
-| id | name    | gender | salary  | start      |
-+----+---------+--------+---------+------------+
-|  1 | Bill    | M      | 1000000 | 2018-01-03 |
-|  2 | Terisa  | F      | 3000000 | 2019-11-13 |
-|  3 | Charlic | M      | 3000000 | 2020-05-21 |
-+----+---------+--------+---------+------------+
-3 rows in set (0.00 sec)
-
-mysql> ALTER TABLE employee_payroll ADD address VARCHAR(250) After name;
-Query OK, 0 rows affected (1.45 sec)
+mysql> ALTER TABLE employee_payroll RENAME COLUMN salary TO basic_pay;
+Query OK, 0 rows affected (0.08 sec)
 Records: 0  Duplicates: 0  Warnings: 0
 
-mysql> ALTER TABLE employee_payroll ADD phone_number VARCHAR(250) After address;
-Query OK, 0 rows affected (0.57 sec)
+mysql> ALTER TABLE employee_payroll ADD deduction DOUBLE NOT NULL AFTER basic_pay;
+Query OK, 0 rows affected (0.78 sec)
 Records: 0  Duplicates: 0  Warnings: 0
 
-mysql> ALTER TABLE employee_payroll ADD department VARCHAR(150) After phone_number;
-Query OK, 0 rows affected (0.62 sec)
+mysql> ALTER TABLE employee_payroll ADD taxable_pay DOUBLE NOT NULL AFTER deduction;
+Query OK, 0 rows affected (0.52 sec)
 Records: 0  Duplicates: 0  Warnings: 0
 
-mysql> ALTER TABLE employee_payroll ALTER address SET DEFAULT 'TBD';
-Query OK, 0 rows affected (0.25 sec)
+mysql> ALTER TABLE employee_payroll ADD tax DOUBLE NOT NULL AFTER taxable_pay;
+Query OK, 0 rows affected (1.48 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE employee_payroll ADD net_pay DOUBLE NOT NULL AFTER tax;
+Query OK, 0 rows affected (0.77 sec)
 Records: 0  Duplicates: 0  Warnings: 0
 
 mysql> describe employee_payroll;
@@ -36,19 +30,13 @@ mysql> describe employee_payroll;
 | phone_number | varchar(250) | YES  |     | NULL    |                |
 | department   | varchar(150) | YES  |     | NULL    |                |
 | gender       | char(1)      | YES  |     | NULL    |                |
-| salary       | double       | NO   |     | NULL    |                |
+| basic_pay    | double       | NO   |     | NULL    |                |
+| deduction    | double       | NO   |     | NULL    |                |
+| taxable_pay  | double       | NO   |     | NULL    |                |
+| tax          | double       | NO   |     | NULL    |                |
+| net_pay      | double       | NO   |     | NULL    |                |
 | start        | date         | NO   |     | NULL    |                |
 +--------------+--------------+------+-----+---------+----------------+
-8 rows in set (0.03 sec)
-
-mysql> SELECT * FROM employee_payroll;
-+----+---------+---------+--------------+------------+--------+---------+------------+
-| id | name    | address | phone_number | department | gender | salary  | start      |
-+----+---------+---------+--------------+------------+--------+---------+------------+
-|  1 | Bill    | NULL    | NULL         | NULL       | M      | 1000000 | 2018-01-03 |
-|  2 | Terisa  | NULL    | NULL         | NULL       | F      | 3000000 | 2019-11-13 |
-|  3 | Charlic | NULL    | NULL         | NULL       | M      | 3000000 | 2020-05-21 |
-+----+---------+---------+--------------+------------+--------+---------+------------+
-3 rows in set (0.05 sec)
+12 rows in set (0.07 sec)
 
 mysql>
